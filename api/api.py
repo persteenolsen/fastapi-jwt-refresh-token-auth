@@ -33,7 +33,7 @@ app = FastAPI(
 origins = [
 
     # Not sure if this is needed, but adding just in case
-    "https://fastapi-jwt-refresh-auth.vercel.app",
+    "https://fastapi-jwt-refresh-token-auth.vercel.app",
 
     # The domain name of the Vue 3 SPA Client
     "https://vue.fastapi.jwt.refresh.auth.persteenolsen.com",
