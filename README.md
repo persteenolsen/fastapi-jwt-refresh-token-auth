@@ -48,9 +48,9 @@ If everything works fine, the FastAPI and Swagger documentation is now available
 
 When you make a change to the models and start run the Web App the PostgreSQL should be updated
 
-# JWT Authentication
+# Authentication by JWT + Refresh Tokens
 
-- The token will expire after 5 minutes for testing and demo. Then a 401 status will happen
+- The JWT Access Token will expire after 2 minutes and the JWT Refresh Token after 5 minuttes for testing and demo. A 401 status will happen after expiration
 
 # The structure of the API by folders for scalability
 
@@ -93,6 +93,28 @@ When you make a change to the models and start run the Web App the PostgreSQL sh
 - Make a commit to your GitHub
 
 - Go to Vercel and check that the build and deployment happened and your site is in Production
+
+# Tech used for the Web API
+
+- Python FastAPI
+- PostgreSQL with tables for Users and RefreshTokens (For future versions with Refresh token Rotations)
+- OpenAPI / Swagger
+- Serves Authentication by JWT with Refresh Tokens
+- Hosted at Vercel Cloud using Serverless Functions
+
+# Things to consider for future versions
+
+- Set the minuttes for the JWT Access Tokens to 15 in .env
+
+- Set the minuttes for the JWT Refresh Tokens to 7 DAYS in .env
+
+- Implement Refresh token rotation
+
+- Implement Revoked token reuse detection
+
+- Protect the API Routes by Rate limits
+
+The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Tokens
 
 Happy use of FastAPI :-)
 
