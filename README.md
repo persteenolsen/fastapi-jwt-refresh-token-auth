@@ -97,7 +97,7 @@ When you make a change to the models and start run the Web App the PostgreSQL sh
 # Tech used for the Web API
 
 - Python FastAPI
-- PostgreSQL with tables for Users and RefreshTokens (For future versions with Refresh token Rotations)
+- PostgreSQL with tables for Users and RefreshTokens (For future versions with Refresh token rotations)
 - OpenAPI / Swagger
 - Serves Authentication by JWT with Refresh Tokens
 - Hosted at Vercel Cloud using Serverless Functions
