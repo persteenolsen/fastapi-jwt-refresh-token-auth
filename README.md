@@ -1,10 +1,10 @@
-# Python + FastAPI + PostgreSQL + Authentication by JWT with Refresh Tokens + Alembic + SQLAlchemy
+# Python + FastAPI + PostgreSQL + Alembic + SQLAlchemy and Authentication by JWT with Refresh Token Rotation
 
-A REST API that serves Authentication by JWT with Refresh Tokens + Registration
+A REST API that serves User Registration and Authentication by JWT with Refresh Token Rotation
 
 Last updated:
 
-- 26-01-2026
+- 27-01-2026
 
 Python Version:
 
@@ -30,6 +30,10 @@ Python Version:
 
 "pip3 install -r requirements.txt"
 
+# Try the Vue 3 frontend for testing the Web API
+
+- [`The Vue 3 Client at GitHub`](https://github.com/persteenolsen/vue-fastapi-jwt-refresh-auth-client) - The Vue 3 Client using JWT + Refresh Token Rotation for Auth
+
 # Swagger documentation / Testing the API
 
 FastAPI provides the Swagger documentation of the API where you can perform CRUD operations
@@ -48,9 +52,11 @@ If everything works fine, the FastAPI and Swagger documentation is now available
 
 When you make a change to the models and start run the Web App the PostgreSQL should be updated
 
-# Authentication by JWT + Refresh Tokens
+# Authentication by JWT + Refresh Token Rotation
 
-- The JWT Access Token will expire after 2 minutes and the JWT Refresh Token after 5 minuttes for testing and demo. A 401 status will happen after expiration
+By implementing Authentication by JWT with Refresh Token Rotation the User can stay logged in after the short lived JWT Access Tokens expires (Few minuttes). Just before the Access Token expires the SPA makes a request to the FastAPI with the Refresh Token received from a successfull Authentication and receives a new JWT Access and Refresh Token. That Flow (Refresh Token Rotation) will make sure the User will stay logged in and reduce the possibility that the Tokens could be stolen 
+
+- The JWT Access Token will expire after 2 minutes and the JWT Refresh Token after 5 minuttes for testing and demo. A 401 status will happen if the Token are not Valid for some reason
 
 # The structure of the API by folders for scalability
 
@@ -97,24 +103,28 @@ When you make a change to the models and start run the Web App the PostgreSQL sh
 # Tech used for the Web API
 
 - Python FastAPI
-- PostgreSQL with tables for Users and RefreshTokens (For future versions with Refresh token rotations)
+- PostgreSQL with tables for Users and RefreshTokens (For future Revoked token reuse detection)
 - OpenAPI / Swagger
-- Serves Authentication by JWT with Refresh Tokens
+- SQLAlchemy as ORM
+- Alembic for Migration 
+- Serves Authentication by JWT with Refresh Token Rotation ( Without Revoked token reuse detection )
+- The JWT Access Token is kept in memory
+- The JWT Refresh Token is kept in menory
 - Hosted at Vercel Cloud using Serverless Functions
 
 # Things to consider for future versions
 
-- Set the minuttes for the JWT Access Tokens to 15 in .env
+- You could set the minuttes for the JWT Access Tokens to 15 in .env
 
-- Set the minuttes for the JWT Refresh Tokens to 7 DAYS in .env
+- You could set the minuttes for the JWT Refresh Tokens to 7 DAYS in .env
 
-- Implement Refresh token rotation
+- Implement the Refresh Token in a HTTP Only Cookie to prevent Cross-Site Scripting
 
 - Implement Revoked token reuse detection
 
 - Protect the API Routes by Rate limits
 
-The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Tokens
+The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Token Rotation
 
 Happy use of FastAPI :-)
 
