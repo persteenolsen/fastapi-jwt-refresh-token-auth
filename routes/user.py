@@ -41,6 +41,9 @@ def login_for_tokens_spa(tokens_type_username = Depends(get_tokens_for_login_spa
     return tokens_type_username
 
 # 26-01-2026 - Refresh Token endpoint for SPA applications
+# Returns access token + refresh token + type + username if Refresh Token is valid
+# 28-01-2026 - To improve security we could check if the User, extrated from the Refresh Token (sub),
+# still exists in the Database
 @router_auth.post("/refresh-token-spa", response_model=BothTokensSchemaSPA, tags=["user"])
 async def refresh_token_spa(refreshToken: str = Body(...)) -> dict: 
     return await get_tokens_and_type(refreshToken)

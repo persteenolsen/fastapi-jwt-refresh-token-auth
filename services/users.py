@@ -77,7 +77,10 @@ def get_tokens_for_login_spa(form_data: OAuth2PasswordRequestForm = Depends(), d
     # Return both tokens and username
     return {"jwtToken": access_token, "refreshToken": refresh_token, "token_type": "bearer", "username": user.username}
 
-# 25-01-2026 - Added function to get new tokens using refresh token
+# Added function to get new tokens using refresh token
+# Function called from public route that returns
+# access token + refresh token + type + username if Refresh Token is valid
+# 28-01-2026 - To improve security we could check if the User still exist in the Database
 async def get_tokens_and_type( r ):
     
     # Test - print the refresh token
@@ -90,6 +93,7 @@ async def get_tokens_and_type( r ):
     # Test - print the username from the refresh token
     print( 'username from refresh token: ' + str(username) )
     
+    # 28-01-2026 - To improve security we could check if the User still exist in the Database
     # If Refresh Token is not valid raise 401 Unauthorized with a custom message
     if username is None:
             raise HTTPException(

@@ -4,7 +4,7 @@ A REST API that serves User Registration and Authentication by JWT with Refresh 
 
 Last updated:
 
-- 27-01-2026
+- 28-01-2026
 
 Python Version:
 
@@ -105,11 +105,12 @@ By implementing Authentication by JWT with Refresh Token Rotation the User can s
 - Python FastAPI
 - PostgreSQL with tables for Users and RefreshTokens (For future Revoked token reuse detection)
 - OpenAPI / Swagger
+- Pydantic for data validation creating schemas
 - SQLAlchemy as ORM
 - Alembic for Migration 
-- Serves Authentication by JWT with Refresh Token Rotation ( Without Revoked token reuse detection )
-- The JWT Access Token is kept in memory
-- The JWT Refresh Token is kept in menory
+- Serves Authentication by JWT with Refresh Token Rotation (Without Revoked token reuse detection)
+- The short lived JWT Access Token is kept in memory for improved security
+- The short lived JWT Refresh Token is kept in menory for improved security and testing the Refresh Token Rotation 
 - Hosted at Vercel Cloud using Serverless Functions
 
 # Things to consider for future versions
@@ -120,9 +121,11 @@ By implementing Authentication by JWT with Refresh Token Rotation the User can s
 
 - Implement the Refresh Token in a HTTP Only Cookie to prevent Cross-Site Scripting
 
+- Check if the User is still (active) in the PostgreSQL by the username extracted from the Refresh Token (sub) at every request for new JWT Access and Refresh Token by the endpoint /refresh-token-spa 
+
 - Implement Revoked token reuse detection
 
-- Protect the API Routes by Rate limits
+- Protect the API Authentication Routes by Rate limits
 
 The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Token Rotation
 
