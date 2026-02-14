@@ -4,7 +4,7 @@ A REST API that serves User Registration and Authentication by JWT with Refresh 
 
 Last updated:
 
-- 13-02-2026
+- 14-02-2026
 
 Python Version:
 
@@ -95,6 +95,8 @@ By implementing Authentication by JWT with Refresh Token Rotation the User can s
 - Create a Project at Vercel from your repository at GitHub with the code of this FastAPI
 
 - Create the envirement variables from .env at Vercel with the connection to PostgreSQL
+
+- Make sure that the requirements.txt is code by UTF-8 WITHOUT BOM ( byte order mark ) which is not surported at Vercel!
 
 - Make a commit to your GitHub
 
