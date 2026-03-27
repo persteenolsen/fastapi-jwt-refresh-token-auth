@@ -20,7 +20,7 @@ models.user.Base.metadata.create_all(bind=engine)
 app = FastAPI(
 
     title="Python + FastApi + PostgreSQL + Alembic + Auth by JWT with Refresh Token Rotation",
-    description="22-03-2026 - FastAPI serving Authentication by JWT with Refresh Token Rotation using these credentials: testuser / admin",
+    description="27-03-2026 - FastAPI serving Authentication by JWT with Refresh Token Rotation using these credentials: testuser / admin",
     version="0.0.1",
 
     contact={
