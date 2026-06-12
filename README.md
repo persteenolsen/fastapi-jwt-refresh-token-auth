@@ -1,6 +1,6 @@
-# Python + FastAPI + PostgreSQL + Alembic + SQLAlchemy and Authentication by JWT with Refresh Token Rotation
+# Python + FastAPI + PostgreSQL + Alembic + SQLAlchemy and Authentication by JWT with Refresh Token Renewal
 
-A REST API that serves User Registration and Authentication by JWT with Refresh Token Rotation
+A REST API that serves User Registration and Authentication by JWT with Refresh Token Renewal
 
 Last updated:
 
@@ -52,9 +52,9 @@ If everything works fine, the FastAPI and Swagger documentation is now available
 
 When you make a change to the models and start run the Web App the PostgreSQL should be updated
 
-# Authentication by JWT + Refresh Token Rotation
+# Authentication by JWT + Refresh Token Renewal
 
-By implementing Authentication by JWT with Refresh Token Rotation the User can stay logged in after the short lived JWT Access Tokens expires (Few minuttes). Just before the Access Token expires the SPA makes a request to the FastAPI with the Refresh Token received from a successfull Authentication and receives a new JWT Access and Refresh Token. That Flow (Refresh Token Rotation) will make sure the User will stay logged in and reduce the possibility that the Tokens could be stolen 
+By implementing Authentication by JWT with Refresh Token Renewal the User can stay logged in after the short lived JWT Access Tokens expires (Few minuttes). Just before the Access Token expires the SPA makes a request to the FastAPI with the Refresh Token received from a successfull Authentication and receives a new JWT Access and Refresh Token. That Flow (Refresh Token Rotation) will make sure the User will stay logged in and reduce the possibility that the Tokens could be stolen 
 
 - The JWT Access Token will expire after 2 minutes and the JWT Refresh Token after 5 minuttes for testing and demo. A 401 status will happen if the Token are not Valid for some reason
 
@@ -129,7 +129,7 @@ By implementing Authentication by JWT with Refresh Token Rotation the User can s
 
 - Protect the API Authentication Routes by Rate limits
 
-The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Token Rotation
+The FastAPI + Vue 3 SPA were made in a simple way for showing the Authentication flow by JWT and Refresh Token Renewal
 
 Happy use of FastAPI :-)
 
