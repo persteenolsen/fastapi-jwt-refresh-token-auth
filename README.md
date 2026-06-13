@@ -120,7 +120,7 @@ alembic upgrade head
 
 ### 6. Start the server
 
-uvicorn main:app --reload
+uvicorn api.api:app --reload
 
 API will be available at:
 http://127.0.0.1:8000
