@@ -40,8 +40,14 @@ def create_access_token(data: dict):
     # For testing purposes we are using only 2 minutes here
     #expire = datetime.now() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    
+    # 13-06-2026 - Added type for validation
+    #to_encode.update({"exp": expire})
+    to_encode.update({
+        "exp": expire,
+        "type": "access"
+    })
 
-    to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
@@ -55,49 +61,51 @@ def create_refresh_token(data: dict):
     # For testing purposes we are using only 5 minutes here
     #expire = datetime.now() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_DAYS)
     expire = datetime.utcnow() + timedelta(minutes=REFRESH_TOKEN_EXPIRE_MINUTES)
+    
+    # 13-06-2026 - Added type for validation
+    #to_encode.update({"exp": expire})
+    to_encode.update({
+        "exp": expire,
+        "type": "refresh"
+    })
 
-    to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-# Verify JWT tokens (JWT Access + Refresh Tokens) by:
-# 1) Is valid signed by the SECRET_KEY
-# 2) Has a Username
-# 3) Has not expired
-# Note: If the token is invalid or expired (2 and 5 minutes for testing and demo), None is returned
-def verify_token(token: str):
-    
+# Verify JWT tokens (Access and Refresh Tokens) by:
+# 1) Is valid and signed by the SECRET_KEY
+# 2) Has not expired
+# 3) Has a Username (sub claim)
+# 4) Matches the expected token type (access or refresh), if specified
+#
+# Note: If the token is invalid, expired, missing required claims,
+# or has the wrong type, None is returned.
+def verify_token(token: str, expected_type: str = None):
+
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        
-        # 24-01-2026 - Added for refresh tokens
-        # There will be an exception if the token has expired
-        expire: datetime = payload.get("exp")
-        if expire is None:
-           return None
-        
-       # Print current datetime and UTC now for debugging        
-        current = datetime.now()
-        print("Current datetime:", str(current))
-        
-        # locally its 1 hour behind the current time
-        utcnow = datetime.now(timezone.utc)
-        print("UTC now:", utcnow)
-        
-        # Just testing - PyJWT will raise an exception if the token has expired 
-        # and this code will not be reached
-        # datetime.utcnow()
-        if datetime.now() < datetime.fromtimestamp(expire):
-           print("The Token has not yet expired !")
-          
-           
-        username: str = payload.get("sub")
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
+        )
+
+        username = payload.get("sub")
+        token_type = payload.get("type")
+
+        # Username must exist
         if username is None:
-           return None
-       
+            return None
+
+        # Validate token type if specified
+        if expected_type and token_type != expected_type:
+            return None
+
         return username
-            
-    except jwt.PyJWTError:
-        print("The Token has expired or another PyJWT Exception occured !")
+
+    except jwt.ExpiredSignatureError:
+        print("Token has expired!")
         return None
-       
+
+    except jwt.InvalidTokenError:
+        print("Invalid token!")
+        return None

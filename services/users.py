@@ -88,7 +88,8 @@ async def get_tokens_and_type( r ):
 
     # Verify Refresh Token and get Username
     # r = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0dXNlciIsImV4cCI6MTc2OTM2MDQwOX0.TavW7sySjMs1jdJrVIsqr7Krdm1bUpvBa-tDeJHKH1I"
-    username = verify_token(r)
+    # username = verify_token(r)
+    username = verify_token( r, expected_type="refresh" )
     
     # Test - print the username from the refresh token
     print( 'username from refresh token: ' + str(username) )
@@ -117,7 +118,13 @@ async def get_tokens_and_type( r ):
 # Validate if the User exist in the Database
 # Return the current User with the information
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
-    username = verify_token(token)
+    
+    # username = verify_token(token)
+    username = verify_token(
+    token,
+    expected_type="access"
+    )
+
     if username is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -132,7 +139,13 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
 # Gets the Username of the current User from the JWT token
 # Validate if the token is valid
 def get_current_username(token: str = Depends(oauth2_scheme)):
-    username = verify_token(token)
+
+    #username = verify_token(token)
+    username = verify_token(
+    token,
+    expected_type="access"
+    )
+
     if username is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -148,7 +161,11 @@ def get_current_username(token: str = Depends(oauth2_scheme)):
 def get_all_users(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
 
     # Validate Token
-    username = verify_token(token)
+    # username = verify_token(token)
+    username = verify_token(
+    token,
+    expected_type="access"
+    )
 
     # If Token is not valid raise 401 Unauthorized with a custom message
     if username is None:

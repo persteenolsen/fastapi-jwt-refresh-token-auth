@@ -2,9 +2,9 @@
 
 A REST API built with FastAPI that demonstrates user authentication using JWT access tokens and refresh token-based session renewal for SPA applications.
 
-This project was created to learn modern backend architecture, authentication flows, and deployment practices using Python.
+This project was created to learn modern backend architecture, authentication flows, testing, and deployment practices using Python.
 
-Last updated: 12-06-2026
+Last updated: 13-06-2026
 
 ---
 
@@ -13,11 +13,13 @@ Last updated: 12-06-2026
 - User registration and authentication
 - JWT-based access tokens
 - Refresh token-based session renewal (SPA flow)
+- Token type separation (`access` / `refresh`)
 - Protected API routes
 - PostgreSQL database integration (Neon)
 - Database migrations with Alembic
 - Swagger / OpenAPI documentation
 - Clean layered architecture (routes, services, models, schemas)
+- Manual authentication test suite (no external testing framework required)
 - Vue 3 frontend integration for testing authentication flow
 
 ---
@@ -45,6 +47,7 @@ The project follows a layered architecture to improve scalability and maintainab
 - schemas → Request/response validation (Pydantic)
 - security → Password hashing and JWT handling
 - db → Database configuration and session handling
+- tests → Manual authentication verification scripts
 
 ---
 
@@ -54,14 +57,18 @@ This project uses JWT authentication with refresh token renewal:
 
 1. User logs in with username and password
 2. Server validates credentials and returns:
-   - Short-lived JWT access token
-   - Refresh token
+   - Short-lived JWT access token (`type: access`)
+   - Refresh token (`type: refresh`)
 3. Client stores tokens and uses access token for API requests
-4. When access token expires:
+4. Access tokens are validated against:
+   - Signature
+   - Expiration
+   - Token type (`access`)
+5. When access token expires:
    - Client sends refresh token to /refresh-token-spa
-   - Server validates refresh token
+   - Server validates refresh token (`type: refresh`)
    - Server issues a new access token and refresh token
-5. Client continues session without requiring login
+6. Client continues session without requiring login
 
 Note: This project uses refresh token renewal (not full rotation with revocation tracking).
 
@@ -137,13 +144,31 @@ It demonstrates:
 
 ---
 
-## Deployment (Vercel)
+## Manual Tests (Authentication Verification)
 
-- Push repository to GitHub
-- Import project into Vercel
-- Add environment variables from .env
-- Ensure requirements.txt is UTF-8 encoded (no BOM)
-- Deploy
+This project includes a lightweight manual test suite for JWT authentication logic (no pytest required).
+
+### Run all tests
+
+python -m tests.test_auth_manual
+
+### What is tested
+
+- Valid access token authentication
+- Token type validation (`access` vs `refresh`)
+- Expired token handling
+- Invalid signature detection
+
+### Example output
+
+Valid token test: testuser  
+Wrong type test: None  
+Token has expired!  
+Expired token test: None  
+Invalid token!  
+Invalid signature test: None  
+
+All tests finished
 
 ---
 
@@ -164,9 +189,11 @@ Protected:
 ## Security Notes
 
 - Passwords are hashed before storage
-- JWT tokens are time-limited
+- JWT tokens include explicit `type` claim (`access` / `refresh`)
+- Access tokens are validated against type to prevent misuse
+- Tokens are time-limited
 - Refresh tokens extend session without re-login
-- Protected routes require valid access token
+- Protected routes require valid access token only
 
 ---
 
@@ -177,7 +204,8 @@ Protected:
 - Use HTTP-only cookies for refresh tokens
 - Add rate limiting on authentication endpoints
 - Improve logging and monitoring
-- Add automated tests (pytest)
+- Replace manual tests with pytest-based test suite
+- Add CI/CD pipeline for automated testing
 
 ---
 
@@ -189,6 +217,7 @@ This project was built as part of a learning path exploring:
 - Backend architecture with FastAPI
 - Full-stack integration with Vue 3
 - Database design and migrations
+- Software testing fundamentals
 - Cloud deployment workflows
 
 ---
@@ -196,4 +225,4 @@ This project was built as part of a learning path exploring:
 ## Author
 
 Built by Per Olsen  
-Portfolio project for backend development and AI-related applications.
+Portfolio project for backend development and AI-related applications
