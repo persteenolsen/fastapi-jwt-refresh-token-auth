@@ -66,7 +66,7 @@ This project uses JWT authentication with refresh token renewal.
    - Server issues a new access token and refresh token
 6. Client continues the session without requiring another login
 
-**Note:** Note: Refresh tokens are stateless JWTs and are not persisted in the database. The application currently does not support refresh token revocation or reuse detection.
+**Note:** Refresh tokens are stateless JWTs and are not persisted in the database. The application currently does not support refresh token revocation or reuse detection.
 
 ---
 
