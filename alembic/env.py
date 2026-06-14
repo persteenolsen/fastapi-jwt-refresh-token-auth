@@ -12,7 +12,9 @@ load_dotenv()
 
 from db.database import Base
 from models import user
-from models import refreshtoken
+
+# 14-06-2026 - Decided to delete refreshtoken because it will not be used in this project!
+# from models import refreshtoken
 
 config = context.config
 config.set_main_option("sqlalchemy.url", os.getenv("DATABASE_URL"))
