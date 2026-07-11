@@ -1,4 +1,4 @@
-# JWT Authentication API (FastAPI + PostgreSQL)
+# 🔐 JWT Authentication API (FastAPI + PostgreSQL)
 
 A REST API built with FastAPI that demonstrates user authentication using JWT access tokens and refresh token renewal for Single Page Applications (SPAs).
 
@@ -8,7 +8,7 @@ This project was created to learn modern backend architecture, authentication fl
 
 ---
 
-## Features
+## ✨ Features
 
 - User registration and authentication
 - JWT-based access tokens
@@ -23,7 +23,7 @@ This project was created to learn modern backend architecture, authentication fl
 
 ---
 
-## Tech Stack
+## 🛠️ Tech Stack
 
 - Python 3.12
 - FastAPI
@@ -36,7 +36,7 @@ This project was created to learn modern backend architecture, authentication fl
 
 ---
 
-## Project Architecture
+## 🏗️ Project Architecture
 
 The project follows a layered architecture to improve maintainability and separation of concerns.
 
@@ -50,7 +50,7 @@ The project follows a layered architecture to improve maintainability and separa
 
 ---
 
-## Authentication Flow
+## 🔄 Authentication Flow
 
 This project uses JWT authentication with refresh token renewal.
 
@@ -70,9 +70,9 @@ This project uses JWT authentication with refresh token renewal.
 
 ---
 
-## Setup Instructions
+## 🚀 Setup Instructions
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
 
 git clone <your-repository-url>
 
@@ -80,7 +80,7 @@ cd <your-project-folder>
 
 ---
 
-### 2. Create a Virtual Environment
+### 2️⃣ Create a Virtual Environment
 
 python -m venv venv
 
@@ -92,13 +92,13 @@ venv\Scripts\activate
 
 ---
 
-### 3. Install Dependencies
+### 3️⃣ Install Dependencies
 
 pip install -r requirements.txt
 
 ---
 
-### 4. Configure Environment Variables
+### 4️⃣ Configure Environment Variables
 
 Create a `.env` file in the project root:
 
@@ -114,7 +114,7 @@ REFRESH_TOKEN_EXPIRE_MINUTES=5
 
 ---
 
-### 5. Run Database Migrations
+### 5️⃣ Run Database Migrations
 
 Apply all existing Alembic migrations:
 
@@ -124,7 +124,7 @@ alembic upgrade head
 
 ---
 
-### 6. Start the Server
+### 6️⃣ Start the Server
 
 uvicorn api.api:app --reload
 
@@ -138,7 +138,7 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## Development: Creating New Migrations
+## 🗄️ Development: Creating New Migrations
 
 After modifying a SQLAlchemy model:
 
@@ -152,13 +152,13 @@ Commit both the model changes and the generated migration file to source control
 
 ---
 
-## Vue 3 Frontend (Testing Client)
+## 🖥️ Vue 3 Frontend (Testing Client)
 
 A companion frontend is available for testing authentication flows:
 
 https://github.com/persteenolsen/vue-fastapi-jwt-refresh-auth-client
 
-Features:
+**Features:**
 
 - Login flow
 - Token storage
@@ -167,22 +167,22 @@ Features:
 
 ---
 
-## Manual Tests (Authentication Verification)
+## 🧪 Manual Tests (Authentication Verification)
 
 This project includes a lightweight manual test suite for verifying JWT authentication behavior without requiring pytest.
 
-### Run Tests
+### ▶️ Run Tests
 
 python -m tests.test_auth_manual
 
-### What Is Tested
+### ✅ What Is Tested
 
 - Valid access token authentication
 - Expired token handling
 - Invalid token detection
 - Invalid signature detection
 
-### Example Output
+### 📋 Example Output
 
 Valid token test: testuser
 
@@ -194,15 +194,15 @@ All tests finished
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
-### Public Endpoints
+### 🌐 Public Endpoints
 
 - POST `/token` → Login and receive access token
 - POST `/tokens-spa` → Login and receive access token + refresh token
 - POST `/refresh-token-spa` → Obtain new tokens using refresh token
 
-### Protected Endpoints
+### 🔒 Protected Endpoints
 
 - GET `/users/me` → Current authenticated user
 - GET `/protected-route` → Protected route example
@@ -210,7 +210,7 @@ All tests finished
 
 ---
 
-## Security Notes
+## 🛡️ Security Notes
 
 - Passwords are hashed before storage
 - JWT tokens include expiration timestamps
@@ -221,7 +221,7 @@ All tests finished
 
 ---
 
-## Future Improvements
+## 🚧 Future Improvements
 
 - Store refresh tokens in the database
 - Implement refresh token rotation and reuse detection
@@ -234,7 +234,7 @@ All tests finished
 
 ---
 
-## Learning Goals
+## 📚 Learning Goals
 
 This project was built as part of a learning journey covering:
 
@@ -248,7 +248,7 @@ This project was built as part of a learning journey covering:
 
 ---
 
-## Author
+## 👤 Author
 
 Built by Per Olsen
 
